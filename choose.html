@@ -26,12 +26,19 @@
 const params = new URLSearchParams(window.location.search);
 const name = params.get("name");
 
-if (!name) {
-  window.location.href = "login.html";
+// نخزن الاسم في sessionStorage
+if (name) {
+  sessionStorage.setItem("studentName", name);
 }
 
-function go(page) {
-  window.location.href = page + "?name=" + encodeURIComponent(name);
+function openSummary(file) {
+  const student = sessionStorage.getItem("studentName");
+  if (!student) {
+    alert("❌ حدث خطأ: لا يوجد اسم مسجل");
+    window.location.href = "login.html";
+    return;
+  }
+  window.location.href = file; // الاسم مش في الرابط
 }
 </script>
 

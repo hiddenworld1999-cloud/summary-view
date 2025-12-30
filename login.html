@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>تسجيل الدخول</title>
+<link rel="stylesheet" href="login.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="login-container">
+  <div class="login-card">
+    <h1>📘 منصة الملخصات</h1>
+    <p>ادخل الكود الخاص بك لعرض الملخص</p>
+
+    <input type="text" id="codeInput" placeholder="🔑 اكتب الكود">
+    <button onclick="checkCode()">دخول</button>
+
+    <span class="note">لا تشارك الكود مع أي شخص</span>
+  </div>
+</div>
+
+<script>
+// الأكواد + الأسماء
+const students = {
+  "1": "Ahmed Mohamed",
+  "A102": "Mona Ali",
+  "A103": "Youssef Hassan"
+};
+
+function checkCode() {
+  const code = document.getElementById("codeInput").value.trim();
+  if (students[code]) {
+    window.location.href =
+      "index.html?name=" + encodeURIComponent(students[code]);
+  } else {
+    alert("❌ الكود غير صحيح");
+  }
+}
+</script>
+
+</body>
+</html>

@@ -14,4 +14,4 @@ if (!student) {
 }
 
 document.getElementById("watermark").innerText =
-  "خاص بالطالب\n" + student;
+  "خاص للطالب\n" + student;

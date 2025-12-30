@@ -14,6 +14,6 @@ if (!student) {
 }
 
 const wm = document.getElementById("watermark");
-if (wm && student) {
-  wm.innerText = "خاص للطالب\n" + student;
+if (wm) {
+  wm.innerText = "خاص للطالب\n" + student; // ← النص هنا اللي هيظهر
 }

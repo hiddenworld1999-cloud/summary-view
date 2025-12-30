@@ -49,21 +49,17 @@ body {
 .watermark {
   position: fixed;
   left: 50%;
-  transform: translateX(-50%) rotate(-25deg);
   font-size: 42px;
   color: rgba(0,0,0,0.18);
   pointer-events: none;
   z-index: 9999;
   text-align: center;
   white-space: pre-line;
+  transform: translateX(-50%) rotate(-25deg);
 }
 
-/* واحدة فوق */
-#watermark-top {
-  top: 25%;
-}
+/* واحد فوق */
+#watermark-top { top: 40%; }
 
-/* واحدة تحت */
-#watermark-bottom {
-  top: 65%;
-}
+/* واحد تحت */
+#watermark-bottom { top: 60%; }

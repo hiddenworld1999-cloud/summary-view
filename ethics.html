@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-<meta charset="UTF-8">
-<title>ملخص أخلاقيات الأعمال</title>
-<link rel="stylesheet" href="style.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+<script>
+const viewer = document.getElementById("viewer");
+const totalPages = 43;
 
-<div class="viewer">
-  <img src="pages/ethics/1.png" alt="صفحة 1">
-  <img src="pages/ethics/2.png" alt="صفحة 2">
-</div>
-
-<div id="watermark"></div>
-<script src="script.js"></script>
-</body>
-</html>
+for (let i = 1; i <= totalPages; i++) {
+  const img = document.createElement("img");
+  const num = String(i).padStart(2, '0');
+  img.src = `ethics-${num}.png`;
+  img.alt = `صفحة ${i}`;
+  viewer.appendChild(img);
+}
+</script>

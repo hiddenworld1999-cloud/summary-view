@@ -46,15 +46,24 @@ body {
   user-select: none;
 }
 
-#watermark {
-  position: fixed;           /* ثابت على الشاشة مهما عملنا scroll */
-  top: 50%;                  /* في منتصف الشاشة عمودي */
-  left: 50%;                 /* في منتصف الشاشة أفقي */
-  transform: translate(-50%, -50%) rotate(-25deg); /* توسيط وتدوير */
+.watermark {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) rotate(-25deg);
   font-size: 42px;
   color: rgba(0,0,0,0.18);
-  pointer-events: none;      /* ما يتفاعلش مع الماوس */
-  z-index: 9999;             /* فوق كل العناصر */
+  pointer-events: none;
+  z-index: 9999;
   text-align: center;
   white-space: pre-line;
+}
+
+/* واحدة فوق */
+#watermark-top {
+  top: 25%;
+}
+
+/* واحدة تحت */
+#watermark-bottom {
+  top: 65%;
 }

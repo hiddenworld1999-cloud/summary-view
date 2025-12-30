@@ -61,6 +61,19 @@ body {
 }
 
 .note {
+
+#watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-25deg);
+  font-size: 42px;
+  color: rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 9999;
+  text-align: center;
+  white-space: pre-line;
+}
   display: block;
   margin-top: 15px;
   font-size: 12px;

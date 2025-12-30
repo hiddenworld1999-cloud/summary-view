@@ -1,4 +1,3 @@
-// منع النسخ والاختيار
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("selectstart", e => e.preventDefault());
 document.addEventListener("keydown", e => {
@@ -7,14 +6,14 @@ document.addEventListener("keydown", e => {
   }
 });
 
-// نقرأ الاسم من sessionStorage بدل URL
-const student = sessionStorage.getItem("studentName");
+const params = new URLSearchParams(window.location.search);
+const student = params.get("name");
 
 if (!student) {
-  window.location.href = "login.html"; // لو محدش سجل دخول
+  window.location.href = "login.html";
 }
 
 const wm = document.getElementById("watermark");
-if (wm && student) {
-  wm.innerText = "خاص للطالب\n" + student;
+if (wm) {
+  wm.innerText = "خاص للطالب\n" + student; // ← النص هنا اللي هيظهر
 }

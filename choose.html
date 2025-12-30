@@ -3,47 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <title>اختيار الملخص</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="choose.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
 <div class="container">
   <h1>📚 اختر الملخص</h1>
-  <p class="sub">اختر المادة التي تريد عرض ملخصها</p>
+  <p class="sub">اختر المادة المطلوبة</p>
 
   <div class="cards">
-
-    <div class="card" onclick="openSummary('database.html')">
-      <span>📊</span>
-      <h3>قواعد البيانات</h3>
-    </div>
-
-    <div class="card" onclick="openSummary('hr.html')">
-      <span>👥</span>
-      <h3>الموارد البشرية</h3>
-    </div>
-
-    <div class="card" onclick="openSummary('ethics.html')">
-      <span>⚖️</span>
-      <h3>أخلاقيات الأعمال</h3>
-    </div>
-
-    <div class="card" onclick="openSummary('entrepreneurship.html')">
-      <span>🚀</span>
-      <h3>ريادة الأعمال</h3>
-    </div>
-
-    <div class="card" onclick="openSummary('investment.html')">
-      <span>💰</span>
-      <h3>مبادئ الاستثمار</h3>
-    </div>
-
-    <div class="card" onclick="openSummary('insurance.html')">
-      <span>🛡️</span>
-      <h3>التأمين وإدارة المخاطر</h3>
-    </div>
-
+    <div class="card" onclick="go('database.html')">📊 قواعد البيانات</div>
+    <div class="card" onclick="go('hr.html')">👥 الموارد البشرية</div>
+    <div class="card" onclick="go('ethics.html')">⚖️ أخلاقيات الأعمال</div>
+    <div class="card" onclick="go('entrepreneurship.html')">🚀 ريادة الأعمال</div>
+    <div class="card" onclick="go('investment.html')">💰 مبادئ الاستثمار</div>
+    <div class="card" onclick="go('insurance.html')">🛡️ التأمين والمخاطر</div>
   </div>
 </div>
 
@@ -55,7 +30,7 @@ if (!name) {
   window.location.href = "login.html";
 }
 
-function openSummary(page) {
+function go(page) {
   window.location.href = page + "?name=" + encodeURIComponent(name);
 }
 </script>

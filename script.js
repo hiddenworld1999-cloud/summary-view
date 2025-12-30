@@ -9,14 +9,9 @@ document.addEventListener("keydown", e => {
 const params = new URLSearchParams(window.location.search);
 const student = params.get("name");
 
-// حماية من فتح index مباشرة
+// حماية من فتح الملخص مباشرة
 if(!student) {
-  // خزّن العلم في sessionStorage قبل إعادة التوجيه
-  sessionStorage.setItem('redirected', 'true');
   window.location.href = "login.html";
-} else {
-  // تحقق من sessionStorage لو تم التحويل مسبقًا
-  sessionStorage.removeItem('redirected');
 }
 
 // Watermark

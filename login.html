@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>تسجيل الدخول</title>
-<link rel="stylesheet" href="login.css">
+<link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -21,7 +21,6 @@
 </div>
 
 <script>
-// الأكواد + الأسماء
 const students = {
   "1": "Ahmed Mohamed",
   "A102": "Mona Ali",
@@ -31,8 +30,8 @@ const students = {
 function checkCode() {
   const code = document.getElementById("codeInput").value.trim();
   if (students[code]) {
-    window.location.href =
-      "index.html?name=" + encodeURIComponent(students[code]);
+    // توجه لاختيار الملخص بعد تسجيل الدخول
+    window.location.href = "choose.html?name=" + encodeURIComponent(students[code]);
   } else {
     alert("❌ الكود غير صحيح");
   }

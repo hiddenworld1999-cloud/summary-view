@@ -1,4 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>أخلاقيات الأعمال</title>
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div id="watermark"></div>
+
+<div id="viewer" class="viewer"></div>
+
 <script>
+/* حماية */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+
+/* الاسم */
+const student = sessionStorage.getItem("studentName");
+if (!student) {
+  window.location.href = "login.html";
+}
+
+document.getElementById("watermark").innerText =
+  "خاص بالطالب\n" + student;
+
+/* الصور */
 const viewer = document.getElementById("viewer");
 const totalPages = 43;
 
@@ -10,3 +43,6 @@ for (let i = 1; i <= totalPages; i++) {
   viewer.appendChild(img);
 }
 </script>
+
+</body>
+</html>

@@ -7,10 +7,15 @@ document.addEventListener("keydown", e => {
   }
 });
 
-// قراءة الاسم من اللينك
+// قراءة الاسم من الرابط
 const params = new URLSearchParams(window.location.search);
-const student = params.get("name") || "طالب غير معروف";
- 
-// Watermark مرة واحدة في النص
+const student = params.get("name");
+
+// لو مفيش اسم → ارجع للصفحة الرئيسية
+if(!student) {
+  window.location.href = "login.html";
+}
+
+// Watermark
 const wm = document.getElementById("watermark");
 wm.innerText = "خاص للطالب " + student;

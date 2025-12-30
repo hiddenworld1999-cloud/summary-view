@@ -3,35 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <title>تسجيل الدخول</title>
-<link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.login-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 350px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.login-card h1 {
+  color: #2a5298;
+  margin-bottom: 10px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.login-card input:focus {
+  border-color: #2a5298;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 12px;
+  background: #2a5298;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-card button:hover {
+  background: #1e3c72;
+}
+
+.note {
+  font-size: 12px;
+  color: #999;
+  margin-top: 10px;
+}
+</style>
 </head>
 <body>
 
-<div class="login-container">
-  <div class="login-card">
-    <h1>📘 منصة الملخصات</h1>
-    <p>ادخل الكود الخاص بك</p>
-
-    <input type="text" id="codeInput" placeholder="🔑 اكتب الكود">
-    <button onclick="checkCode()">دخول</button>
-
-    <span class="note">لا تشارك الكود مع أي شخص</span>
-  </div>
+<div class="login-card">
+  <h1>📘 منصة الملخصات</h1>
+  <input type="text" id="codeInput" placeholder="🔑 اكتب الكود">
+  <button onclick="checkCode()">دخول</button>
+  <span class="note">لا تشارك الكود مع أي شخص</span>
 </div>
 
 <script>
+// الأكواد + الأسماء
 const students = {
-  "A1": "Ahmed Mohamed",
-  "A2": "Mona Ali",
-  "A3": "Youssef Hassan"
+  "1": "Ahmed Mohamed",
+  "A102": "Mona Ali",
+  "A103": "Youssef Hassan"
 };
 
 function checkCode() {
   const code = document.getElementById("codeInput").value.trim();
   if (students[code]) {
-    window.location.href =
-      "choose.html?name=" + encodeURIComponent(students[code]);
+    window.location.href = "choose.html?name=" + encodeURIComponent(students[code]);
   } else {
     alert("❌ الكود غير صحيح");
   }

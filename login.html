@@ -11,7 +11,7 @@
 <div class="login-container">
   <div class="login-card">
     <h1>📘 منصة الملخصات</h1>
-    <p>ادخل الكود الخاص بك لعرض الملخص</p>
+    <p>ادخل الكود الخاص بك</p>
 
     <input type="text" id="codeInput" placeholder="🔑 اكتب الكود">
     <button onclick="checkCode()">دخول</button>
@@ -22,16 +22,16 @@
 
 <script>
 const students = {
-  "1": "Ahmed Mohamed",
-  "A102": "Mona Ali",
-  "A103": "Youssef Hassan"
+  "A1": "Ahmed Mohamed",
+  "A2": "Mona Ali",
+  "A3": "Youssef Hassan"
 };
 
 function checkCode() {
   const code = document.getElementById("codeInput").value.trim();
   if (students[code]) {
-    // بدل index.html → نروح choose.html
-    window.location.href = "choose.html?name=" + encodeURIComponent(students[code]);
+    window.location.href =
+      "choose.html?name=" + encodeURIComponent(students[code]);
   } else {
     alert("❌ الكود غير صحيح");
   }

@@ -5,11 +5,47 @@
 <title>أخلاقيات الأعمال</title>
 <link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* Watermark */
+.watermark {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) rotate(-25deg);
+  font-size: 42px;
+  color: rgba(0,0,0,0.18);
+  pointer-events: none;
+  z-index: 9999;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* فوق */
+#watermark-top { top: 25%; }
+
+/* تحت */
+#watermark-bottom { top: 65%; }
+
+/* viewer */
+.viewer {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.viewer img {
+  width: 100%;
+  margin-bottom: 20px;
+  user-select: none;
+}
+</style>
 </head>
 <body>
 
-<div id="watermark"></div>
+<!-- ✅ Watermarks -->
+<div id="watermark-top" class="watermark"></div>
+<div id="watermark-bottom" class="watermark"></div>
 
+<!-- محتوى الملخص -->
 <div id="viewer" class="viewer"></div>
 
 <script>
@@ -28,10 +64,12 @@ if (!student) {
   window.location.href = "login.html";
 }
 
-document.getElementById("watermark").innerText =
-  "خاص بالطالب\n" + student;
+/* وضع الاسم في Watermarks */
+const text = "خاص بالطالب\n" + student;
+document.getElementById("watermark-top").innerText = text;
+document.getElementById("watermark-bottom").innerText = text;
 
-/* الصور */
+/* تحميل الصور تلقائيًا */
 const viewer = document.getElementById("viewer");
 const totalPages = 43;
 

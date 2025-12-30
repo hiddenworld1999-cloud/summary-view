@@ -3,32 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <title>اختيار الملخص</title>
-<link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="choose.css">
 </head>
 <body>
 
-<h1>مرحبا بك!</h1>
-<p>اختر الملخص الذي تريد عرضه:</p>
+<div class="container">
+  <h1>📚 اختر الملخص</h1>
+  <p class="sub">اختر المادة التي تريد عرض ملخصها</p>
 
-<div class="summary-buttons">
-  <button onclick="openSummary('database.html')">📚 قواعد البيانات</button>
-  <button onclick="openSummary('hr.html')">👥 الموارد البشرية</button>
-  <button onclick="openSummary('ethics.html')">⚖️ أخلاقيات الأعمال</button>
-  <button onclick="openSummary('entrepreneurship.html')">🚀 ريادة الأعمال</button>
-  <button onclick="openSummary('investment.html')">💰 مبادئ الاستثمار</button>
-  <button onclick="openSummary('insurance.html')">🛡️ التأمين وإدارة المخاطر</button>
+  <div class="cards">
+
+    <div class="card" onclick="openSummary('database.html')">
+      <span>📊</span>
+      <h3>قواعد البيانات</h3>
+    </div>
+
+    <div class="card" onclick="openSummary('hr.html')">
+      <span>👥</span>
+      <h3>الموارد البشرية</h3>
+    </div>
+
+    <div class="card" onclick="openSummary('ethics.html')">
+      <span>⚖️</span>
+      <h3>أخلاقيات الأعمال</h3>
+    </div>
+
+    <div class="card" onclick="openSummary('entrepreneurship.html')">
+      <span>🚀</span>
+      <h3>ريادة الأعمال</h3>
+    </div>
+
+    <div class="card" onclick="openSummary('investment.html')">
+      <span>💰</span>
+      <h3>مبادئ الاستثمار</h3>
+    </div>
+
+    <div class="card" onclick="openSummary('insurance.html')">
+      <span>🛡️</span>
+      <h3>التأمين وإدارة المخاطر</h3>
+    </div>
+
+  </div>
 </div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const student = params.get("name");
+const name = params.get("name");
 
-// لو مفيش اسم → ارجع للـ login
-if(!student) window.location.href = "login.html";
+if (!name) {
+  window.location.href = "login.html";
+}
 
-function openSummary(file) {
-  window.location.href = file + "?name=" + encodeURIComponent(student);
+function openSummary(page) {
+  window.location.href = page + "?name=" + encodeURIComponent(name);
 }
 </script>
 

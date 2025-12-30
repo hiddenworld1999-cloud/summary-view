@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>اختيار الملخص</title>
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>مرحبا بك!</h1>
+<p>اختر الملخص الذي تريد عرضه:</p>
+
+<div class="summary-buttons">
+  <button onclick="openSummary('index.html')">ملخص 1</button>
+  <button onclick="openSummary('index2.html')">ملخص 2</button>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const student = params.get("name");
+
+// لو مفيش اسم → ارجع للـ login
+if(!student) window.location.href = "login.html";
+
+function openSummary(file) {
+  window.location.href = file + "?name=" + encodeURIComponent(student);
+}
+</script>
+
+</body>
+</html>

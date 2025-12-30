@@ -14,7 +14,7 @@ if (!student) {
 }
 
 /* Watermarks */
-const text = "خاص للطالب\n" + student;
+const text ="خاص للطالب/ة\n" + student;
 document.getElementById("watermark-top").innerText = text;
 document.getElementById("watermark-bottom").innerText = text;
 

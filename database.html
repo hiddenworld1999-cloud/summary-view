@@ -5,14 +5,42 @@
 <title>قواعد البيانات</title>
 <link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.watermark { position: fixed; left: 50%; transform: translateX(-50%) rotate(-25deg); font-size: 42px; color: rgba(0,0,0,0.18); pointer-events: none; z-index: 9999; text-align: center; white-space: pre-line; }
+#watermark-top { top: 25%; }
+#watermark-bottom { top: 65%; }
+.viewer { max-width: 800px; margin: auto; padding: 20px; }
+.viewer img { width: 100%; margin-bottom: 20px; user-select: none; }
+</style>
 </head>
 <body>
 
 <div id="watermark-top" class="watermark"></div>
 <div id="watermark-bottom" class="watermark"></div>
-
 <div id="viewer" class="viewer"></div>
 
-<script src="script.js"></script>
+<script>
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("keydown", e => { if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) e.preventDefault(); });
+
+const student = sessionStorage.getItem("studentName");
+if (!student) window.location.href = "login.html";
+
+const text = "خاص بالطالب\n" + student;
+document.getElementById("watermark-top").innerText = text;
+document.getElementById("watermark-bottom").innerText = text;
+
+const viewer = document.getElementById("viewer");
+const totalPages = 30; // عدد صفحات الملخص
+for (let i = 1; i <= totalPages; i++) {
+  const img = document.createElement("img");
+  const num = String(i).padStart(2,'0');
+  img.src = `database-${num}.png`;
+  img.alt = `صفحة ${i}`;
+  viewer.appendChild(img);
+}
+</script>
+
 </body>
 </html>

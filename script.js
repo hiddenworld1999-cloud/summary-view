@@ -17,4 +17,4 @@ if (!student) {
 
 // كتابة الاسم مرة واحدة في النص
 const wm = document.getElementById("watermark");
-wm.innerText = "خاص بالطالب\n" + student;
+wm.innerText = "خاص للطالب\n" + student;

@@ -13,7 +13,3 @@ if (!student) {
   window.location.href = "login.html";
 }
 
-const wm = document.getElementById("watermark");
-if (wm && student) {
-  wm.innerText = "خاص للطالب\n" + student;
-}

@@ -1,3 +1,4 @@
+// منع كليك يمين وتحديد النص ونسخ الصفحة
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("selectstart", e => e.preventDefault());
 document.addEventListener("keydown", e => {
@@ -6,14 +7,14 @@ document.addEventListener("keydown", e => {
   }
 });
 
-const params = new URLSearchParams(window.location.search);
-const student = params.get("name");
+// قراءة الاسم من sessionStorage
+const student = sessionStorage.getItem("studentName");
 
 if (!student) {
-  window.location.href = "login.html";
+  window.location.href = "login.html"; // لو محدش سجل دخول
 }
 
 const wm = document.getElementById("watermark");
 if (wm) {
-  wm.innerText = "خاص للطالب\n" + student; // ← النص هنا اللي هيظهر
+  wm.innerText = "خاص للطالب\n" + student;
 }

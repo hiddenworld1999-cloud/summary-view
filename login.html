@@ -30,7 +30,7 @@ const students = {
 function checkCode() {
   const code = document.getElementById("codeInput").value.trim();
   if (students[code]) {
-    // توجه لاختيار الملخص بعد تسجيل الدخول
+    // بدل index.html → نروح choose.html
     window.location.href = "choose.html?name=" + encodeURIComponent(students[code]);
   } else {
     alert("❌ الكود غير صحيح");

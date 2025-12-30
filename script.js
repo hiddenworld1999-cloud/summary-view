@@ -14,4 +14,6 @@ if (!student) {
 }
 
 const wm = document.getElementById("watermark");
-wm.innerText = "خاص بالطالب\n" + student;
+if (wm && student) {
+  wm.innerText = "خاص بالطالب\n" + student;
+}

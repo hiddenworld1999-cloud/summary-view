@@ -46,9 +46,6 @@ body {
   white-space: pre-line;
 }
 
-#watermark-top { top: 25%; }
-#watermark-bottom { top: 65%; }
-
 /* viewer */
 .viewer {
   max-width: 800px;
@@ -56,30 +53,14 @@ body {
   padding: 20px;
 }
 
-.page-container {
-  position: relative;
+.viewer img {
+  width: 100%;
   margin-bottom: 20px;
-}
-
-.page-image {
-  width: 100%;
-}
-
-.page-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  cursor: crosshair;
+  user-select: none;
 }
 </style>
 </head>
 <body>
-
-<!-- Watermark -->
-<div id="watermark-top" class="watermark"></div>
-<div id="watermark-bottom" class="watermark"></div>
 
 <!-- اختيار -->
 <div id="choices" class="choices">
@@ -96,7 +77,9 @@ body {
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("selectstart", e => e.preventDefault());
 document.addEventListener("keydown", e => {
-  if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) e.preventDefault();
+  if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
 });
 
 /* الاسم */
@@ -105,56 +88,42 @@ if (!student) {
   window.location.href = "login.html";
 }
 
-/* وضع Watermark */
-function setWatermark(show) {
-  const text = "خاص بالطالب\n" + student;
-  document.getElementById("watermark-top").innerText = show ? text : "";
-  document.getElementById("watermark-bottom").innerText = show ? text : "";
-}
-
-/* تحميل الصور */
+/* تحميل الصور وعمل العلامة المائية بعد الاختيار */
 function loadHR(withAnswers) {
   document.getElementById("choices").style.display = "none";
-  setWatermark(withAnswers); // يظهر فقط للصور بالإجابات
 
+  // Watermark يظهر فقط بعد اختيار نوع الملخص
+  const watermarkText = "خاص للطالب\n" + student;
+  const watermarkTop = document.createElement("div");
+  const watermarkBottom = document.createElement("div");
+
+  watermarkTop.id = "watermark-top";
+  watermarkTop.className = "watermark";
+  watermarkTop.style.top = "25%";
+  watermarkTop.innerText = watermarkText;
+
+  watermarkBottom.id = "watermark-bottom";
+  watermarkBottom.className = "watermark";
+  watermarkBottom.style.top = "65%";
+  watermarkBottom.innerText = watermarkText;
+
+  document.body.appendChild(watermarkTop);
+  document.body.appendChild(watermarkBottom);
+
+  // تحميل الصور
   const viewer = document.getElementById("viewer");
-  const totalPages = 39; // عدد صفحات الموارد البشرية
+  const totalPages = 39;
 
   for (let i = 1; i <= totalPages; i++) {
+    const img = document.createElement("img");
     const num = String(i).padStart(2, '0');
 
-    const container = document.createElement("div");
-    container.className = "page-container";
+    img.src = withAnswers
+      ? `hr-${num}.png`
+      : `hr-no-${num}.png`;
 
-    const img = document.createElement("img");
-    img.className = "page-image";
-    img.src = withAnswers ? `hr-${num}.png` : `hr-no-${num}.png`;
     img.alt = `صفحة ${i}`;
-    container.appendChild(img);
-
-    // لو بدون إجابات، نضيف canvas للتفاعل
-    if (!withAnswers) {
-      const canvas = document.createElement("canvas");
-      canvas.className = "page-canvas";
-      container.appendChild(canvas);
-
-      // إعداد الرسم
-      const ctx = canvas.getContext("2d");
-      let drawing = false;
-      canvas.addEventListener('mousedown', () => drawing = true);
-      canvas.addEventListener('mouseup', () => drawing = false);
-      canvas.addEventListener('mouseout', () => drawing = false);
-      canvas.addEventListener('mousemove', e => {
-        if (!drawing) return;
-        const rect = canvas.getBoundingClientRect();
-        ctx.fillStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(e.clientX - rect.left, e.clientY - rect.top, 3, 0, Math.PI*2);
-        ctx.fill();
-      });
-    }
-
-    viewer.appendChild(container);
+    viewer.appendChild(img);
   }
 }
 </script>

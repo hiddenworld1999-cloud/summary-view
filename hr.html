@@ -1,88 +1,87 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>مادة الموارد البشرية</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .controls {
-      margin-top: 15px;
-    }
-    button {
-      padding: 10px 18px;
-      margin: 5px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      background: #2d89ef;
-      color: #fff;
-    }
-    button:disabled {
-      background: #999;
-      cursor: not-allowed;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>الموارد البشرية</title>
+<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* Watermark */
+.watermark {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) rotate(-25deg);
+  font-size: 42px;
+  color: rgba(0,0,0,0.18);
+  pointer-events: none;
+  z-index: 9999;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* فوق */
+#watermark-top { top: 25%; }
+
+/* تحت */
+#watermark-bottom { top: 65%; }
+
+/* viewer */
+.viewer {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.viewer img {
+  width: 100%;
+  margin-bottom: 20px;
+  user-select: none;
+}
+</style>
 </head>
+
 <body>
 
-  <h2>مادة الموارد البشرية</h2>
+<!-- ✅ Watermarks -->
+<div id="watermark-top" class="watermark"></div>
+<div id="watermark-bottom" class="watermark"></div>
 
-  <img id="slide" src="hr-01.png" alt="HR Slide">
+<div id="viewer" class="viewer"></div>
 
-  <div class="controls">
-    <button id="prev">السابق</button>
-    <button id="next">التالي</button>
-  </div>
+<script>
+/* حماية */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
 
-  <p id="counter">1 / 39</p>
+/* الاسم */
+const student = sessionStorage.getItem("studentName");
+if (!student) {
+  window.location.href = "login.html";
+}
 
-  <script>
-    let currentPage = 1;
-    const totalPages = 39;
+/* وضع الاسم في Watermarks */
+const text = "خاص بالطالب\n" + student;
+document.getElementById("watermark-top").innerText = text;
+document.getElementById("watermark-bottom").innerText = text;
 
-    const img = document.getElementById("slide");
-    const counter = document.getElementById("counter");
-    const prevBtn = document.getElementById("prev");
-    const nextBtn = document.getElementById("next");
+/* تحميل صور الموارد البشرية */
+const viewer = document.getElementById("viewer");
+const totalPages = 39;
 
-    function updateSlide() {
-      const pageNumber = String(currentPage).padStart(2, "0");
-      img.src = `hr-${pageNumber}.png`;
-      counter.textContent = `${currentPage} / ${totalPages}`;
-
-      prevBtn.disabled = currentPage === 1;
-      nextBtn.disabled = currentPage === totalPages;
-    }
-
-    prevBtn.onclick = () => {
-      if (currentPage > 1) {
-        currentPage--;
-        updateSlide();
-      }
-    };
-
-    nextBtn.onclick = () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        updateSlide();
-      }
-    };
-
-    updateSlide();
-  </script>
+for (let i = 1; i <= totalPages; i++) {
+  const img = document.createElement("img");
+  const num = String(i).padStart(2, '0');
+  img.src = `hr-${num}.png`;
+  img.alt = `صفحة ${i}`;
+  viewer.appendChild(img);
+}
+</script>
 
 </body>
 </html>

@@ -2,45 +2,46 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>قواعد البيانات</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>المادة غير جاهزة</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-.watermark { position: fixed; left: 50%; transform: translateX(-50%) rotate(-25deg); font-size: 42px; color: rgba(0,0,0,0.18); pointer-events: none; z-index: 9999; text-align: center; white-space: pre-line; }
-#watermark-top { top: 25%; }
-#watermark-bottom { top: 65%; }
-.viewer { max-width: 800px; margin: auto; padding: 20px; }
-.viewer img { width: 100%; margin-bottom: 20px; user-select: none; }
+body {
+  margin: 0;
+  background: #f5f5f5;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: #333;
+}
+
+.message-box {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.message-box h1 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.message-box p {
+  font-size: 18px;
+  color: #555;
+}
 </style>
 </head>
 <body>
 
-<div id="watermark-top" class="watermark"></div>
-<div id="watermark-bottom" class="watermark"></div>
-<div id="viewer" class="viewer"></div>
-
-<script>
-document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("selectstart", e => e.preventDefault());
-document.addEventListener("keydown", e => { if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) e.preventDefault(); });
-
-const student = sessionStorage.getItem("studentName");
-if (!student) window.location.href = "login.html";
-
-const text = "خاص بالطالب\n" + student;
-document.getElementById("watermark-top").innerText = text;
-document.getElementById("watermark-bottom").innerText = text;
-
-const viewer = document.getElementById("viewer");
-const totalPages = 30; // عدد صفحات الملخص
-for (let i = 1; i <= totalPages; i++) {
-  const img = document.createElement("img");
-  const num = String(i).padStart(2,'0');
-  img.src = `database-${num}.png`;
-  img.alt = `صفحة ${i}`;
-  viewer.appendChild(img);
-}
-</script>
+<div class="message-box">
+  <h1>⏳ انتظر الأسئلة</h1>
+  <p>هذه المادة لم تُرفع بعد. برجاء العودة لاحقًا.</p>
+</div>
 
 </body>
 </html>

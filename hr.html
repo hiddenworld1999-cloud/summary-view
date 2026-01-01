@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>الموارد البشرية</title>
-<link rel="stylesheet" href="style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* Watermark */
 .watermark {
   position: fixed;
   left: 50%;
@@ -20,13 +18,9 @@
   white-space: pre-line;
 }
 
-/* فوق */
 #watermark-top { top: 25%; }
-
-/* تحت */
 #watermark-bottom { top: 65%; }
 
-/* viewer */
 .viewer {
   max-width: 800px;
   margin: auto;
@@ -38,16 +32,44 @@
   margin-bottom: 20px;
   user-select: none;
 }
+
+.choice-box {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.choice-box button {
+  padding: 15px 25px;
+  font-size: 18px;
+  margin: 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.no-ans { background: #1976d2; color: #fff; }
+.with-ans { background: #2e7d32; color: #fff; }
 </style>
 </head>
 
 <body>
 
-<!-- ✅ Watermarks -->
+<!-- اختيار -->
+<div class="choice-box" id="choices">
+  <h2>اختر طريقة عرض المادة</h2>
+  <button class="no-ans" onclick="loadMaterial('hr')">
+    بدون إجابات
+  </button>
+  <button class="with-ans" onclick="loadMaterial('hr-ans')">
+    بالإجابات
+  </button>
+</div>
+
+<!-- Watermark -->
 <div id="watermark-top" class="watermark"></div>
 <div id="watermark-bottom" class="watermark"></div>
 
-<div id="viewer" class="viewer"></div>
+<div id="viewer" class="viewer" style="display:none"></div>
 
 <script>
 /* حماية */
@@ -59,21 +81,30 @@ document.addEventListener("keydown", e => {
   }
 });
 
-/* الاسم */
+/* تحقق من الدخول */
 const student = sessionStorage.getItem("studentName");
-if (!student) {
-  window.location.href = "login.html";
-}
+if (!student) location.href = "login.html";
 
-/* وضع الاسم في Watermarks */
+/* watermark */
 const text = "خاص بالطالب\n" + student;
 document.getElementById("watermark-top").innerText = text;
 document.getElementById("watermark-bottom").innerText = text;
 
+/* تحميل الصور */
+function loadMaterial(prefix) {
+  document.getElementById("choices").style.display = "none";
+  const viewer = document.getElementById("viewer");
+  viewer.style.display = "block";
 
+  const totalPages = 39;
 
-
-
+  for (let i = 1; i <= totalPages; i++) {
+    const img = document.createElement("img");
+    const num = String(i).padStart(2, '0');
+    img.src = `${prefix}-${num}.png`;
+    viewer.appendChild(img);
+  }
+}
 </script>
 
 </body>

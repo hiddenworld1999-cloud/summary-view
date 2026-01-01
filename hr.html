@@ -70,17 +70,10 @@ const text = "خاص بالطالب\n" + student;
 document.getElementById("watermark-top").innerText = text;
 document.getElementById("watermark-bottom").innerText = text;
 
-/* تحميل صور الموارد البشرية */
-const viewer = document.getElementById("viewer");
-const totalPages = 39;
 
-for (let i = 1; i <= totalPages; i++) {
-  const img = document.createElement("img");
-  const num = String(i).padStart(2, '0');
-  img.src = `hr-${num}.png`;
-  img.alt = `صفحة ${i}`;
-  viewer.appendChild(img);
-}
+
+
+
 </script>
 
 </body>

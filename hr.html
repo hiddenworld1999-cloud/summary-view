@@ -1,19 +1,88 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>ملخص الموارد البشرية</title>
-<link rel="stylesheet" href="style.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>مادة الموارد البشرية</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .controls {
+      margin-top: 15px;
+    }
+    button {
+      padding: 10px 18px;
+      margin: 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #2d89ef;
+      color: #fff;
+    }
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
 
-<div class="viewer">
-  <img src="pages/hr/1.png" alt="صفحة 1">
-  <img src="pages/hr/2.png" alt="صفحة 2">
-</div>
+  <h2>مادة الموارد البشرية</h2>
 
-<div id="watermark"></div>
-<script src="script.js"></script>
+  <img id="slide" src="hr-01.png" alt="HR Slide">
+
+  <div class="controls">
+    <button id="prev">السابق</button>
+    <button id="next">التالي</button>
+  </div>
+
+  <p id="counter">1 / 39</p>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 39;
+
+    const img = document.getElementById("slide");
+    const counter = document.getElementById("counter");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+
+    function updateSlide() {
+      const pageNumber = String(currentPage).padStart(2, "0");
+      img.src = `hr-${pageNumber}.png`;
+      counter.textContent = `${currentPage} / ${totalPages}`;
+
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+    }
+
+    prevBtn.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updateSlide();
+      }
+    };
+
+    nextBtn.onclick = () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        updateSlide();
+      }
+    };
+
+    updateSlide();
+  </script>
+
 </body>
 </html>

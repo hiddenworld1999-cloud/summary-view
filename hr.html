@@ -33,19 +33,6 @@ body {
   background: #1e3c72;
 }
 
-/* Watermark */
-.watermark {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%) rotate(-25deg);
-  font-size: 42px;
-  color: rgba(0,0,0,0.18);
-  pointer-events: none;
-  z-index: 9999;
-  text-align: center;
-  white-space: pre-line;
-}
-
 /* viewer */
 .viewer {
   max-width: 800px;
@@ -53,10 +40,12 @@ body {
   padding: 20px;
 }
 
-.viewer img {
+/* canvas */
+canvas {
   width: 100%;
   margin-bottom: 20px;
   user-select: none;
+  pointer-events: none;
 }
 </style>
 </head>
@@ -88,42 +77,44 @@ if (!student) {
   window.location.href = "login.html";
 }
 
-/* تحميل الصور وعمل العلامة المائية بعد الاختيار */
+/* تحميل الصور + رسم الاسم داخل الصورة */
 function loadHR(withAnswers) {
   document.getElementById("choices").style.display = "none";
 
-  // Watermark يظهر فقط بعد اختيار نوع الملخص
-  const watermarkText = "خاص للطالب\n" + student;
-  const watermarkTop = document.createElement("div");
-  const watermarkBottom = document.createElement("div");
-
-  watermarkTop.id = "watermark-top";
-  watermarkTop.className = "watermark";
-  watermarkTop.style.top = "25%";
-  watermarkTop.innerText = watermarkText;
-
-  watermarkBottom.id = "watermark-bottom";
-  watermarkBottom.className = "watermark";
-  watermarkBottom.style.top = "65%";
-  watermarkBottom.innerText = watermarkText;
-
-  document.body.appendChild(watermarkTop);
-  document.body.appendChild(watermarkBottom);
-
-  // تحميل الصور
   const viewer = document.getElementById("viewer");
   const totalPages = 39;
 
   for (let i = 1; i <= totalPages; i++) {
-    const img = document.createElement("img");
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
     const num = String(i).padStart(2, '0');
 
     img.src = withAnswers
       ? `hr-${num}.png`
       : `hr-no-${num}.png`;
 
-    img.alt = `صفحة ${i}`;
-    viewer.appendChild(img);
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // رسم الصورة
+      ctx.drawImage(img, 0, 0);
+
+      // رسم العلامة المائية
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(-25 * Math.PI / 180);
+      ctx.font = "48px Arial";
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.textAlign = "center";
+      ctx.fillText("خاص بالطالب", 0, 0);
+      ctx.fillText(student, 0, 60);
+      ctx.restore();
+    };
+
+    viewer.appendChild(canvas);
   }
 }
 </script>

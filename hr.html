@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>الموارد البشرية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -46,75 +47,65 @@ canvas {
   user-select: none;
   pointer-events: none;
 }
-
-/* Quiz */
-#quiz button {
-  padding: 15px 25px;
-  margin: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: #2a5298;
-  color: white;
-}
-#quiz button:hover { background: #1e3c72; }
-
-#result { font-size: 20px; margin-top: 20px; font-weight:bold; }
 </style>
 </head>
 <body>
 
 <!-- اختيار -->
 <div id="choices" class="choices">
-  <h2>اختر نوع الملخص</h2>
+  <h2>اختر نوع الأسئلة</h2>
   <button onclick="loadHR(false)">📘 بدون إجابات</button>
   <button onclick="loadHR(true)">✅ بالإجابات</button>
-  <button onclick="startQuiz()">📝 اختبار تفاعلي</button>
 </div>
 
 <!-- الصور -->
 <div id="viewer" class="viewer"></div>
-
-<!-- Quiz -->
-<div id="quiz"></div>
-<div id="result"></div>
 
 <script>
 /* حماية */
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("selectstart", e => e.preventDefault());
 document.addEventListener("keydown", e => {
-  if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) e.preventDefault();
+  if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
 });
 
 /* الاسم */
 const student = sessionStorage.getItem("studentName");
-if (!student) window.location.href = "login.html";
+if (!student) {
+  window.location.href = "login.html";
+}
 
-/* تحميل الصور + رسم العلامة المائية */
+/* تحميل الصور + رسم الاسم داخل الصورة */
 function loadHR(withAnswers) {
   document.getElementById("choices").style.display = "none";
+
   const viewer = document.getElementById("viewer");
   const totalPages = 39;
 
   for (let i = 1; i <= totalPages; i++) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
-    const img = new Image();
-    const num = String(i).padStart(2,'0');
 
-    img.src = withAnswers ? `hr-${num}.png` : `hr-no-${num}.png`;
+    const img = new Image();
+    const num = String(i).padStart(2, '0');
+
+    img.src = withAnswers
+      ? `hr-${num}.png`
+      : `hr-no-${num}.png`;
 
     img.onload = () => {
       canvas.width = img.width;
       canvas.height = img.height;
+
+      // رسم الصورة
       ctx.drawImage(img, 0, 0);
 
-      // العلامة المائية
+      // رسم العلامة المائية
       ctx.save();
-      ctx.translate(canvas.width/2, canvas.height/2);
-      ctx.rotate(-25 * Math.PI/180);
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(-25 * Math.PI / 180);
       ctx.font = "100px Arial";
       ctx.fillStyle = "rgba(0,0,0,0.2)";
       ctx.textAlign = "center";
@@ -122,65 +113,9 @@ function loadHR(withAnswers) {
       ctx.fillText(student, 0, 120);
       ctx.restore();
     };
+
     viewer.appendChild(canvas);
   }
-}
-
-/* Quiz تفاعلي */
-let quizCurrent = 0;
-let quizScore = 0;
-const quizTotal = 10; // عدد الصور كاسئلة
-
-function startQuiz() {
-  document.getElementById("choices").style.display = "none";
-  document.getElementById("viewer").style.display = "none";
-
-  quizCurrent = 0;
-  quizScore = 0;
-  showQuizQuestion();
-}
-
-function showQuizQuestion() {
-  if (quizCurrent >= quizTotal) {
-    document.getElementById("quiz").innerHTML = '';
-    document.getElementById("result").innerText = `نتيجتك: ${quizScore}/${quizTotal}`;
-    return;
-  }
-
-  const num = String(quizCurrent+1).padStart(2,'0');
-  let html = `<canvas id="qCanvas${quizCurrent}"></canvas><br>`;
-  html += `<button onclick="answer(true)">✅ إجابة صحيحة</button>`;
-  html += `<button onclick="answer(false)">❌ إجابة خاطئة</button>`;
-
-  document.getElementById("quiz").innerHTML = html;
-
-  // رسم الصورة على Canvas
-  const canvas = document.getElementById(`qCanvas${quizCurrent}`);
-  const ctx = canvas.getContext("2d");
-  const img = new Image();
-  img.src = `hr-no-${num}.png`;
-  img.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
-
-    // العلامة المائية
-    ctx.save();
-    ctx.translate(canvas.width/2, canvas.height/2);
-    ctx.rotate(-25 * Math.PI/180);
-    ctx.font = "80px Arial";
-    ctx.fillStyle = "rgba(0,0,0,0.2)";
-    ctx.textAlign = "center";
-    ctx.fillText("خاص للطالب", 0, 0);
-    ctx.fillText(student, 0, 100);
-    ctx.restore();
-  };
-}
-
-function answer(correct){
-  if(correct) quizScore++;
-  quizCurrent++;
-  showQuizQuestion();
 }
 </script>
 

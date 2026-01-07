@@ -45,7 +45,6 @@ canvas {
   width: 100%;
   margin-bottom: 20px;
   user-select: none;
-  pointer-events: none;
 }
 </style>
 </head>
@@ -62,40 +61,32 @@ canvas {
 <div id="viewer" class="viewer"></div>
 
 <script>
-/* حماية */
+/* حماية بسيطة */
 document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("selectstart", e => e.preventDefault());
-document.addEventListener("keydown", e => {
-  if (e.ctrlKey && ['c','s','p','u'].includes(e.key.toLowerCase())) {
-    e.preventDefault();
-  }
-});
 
-/* اسم الطالب */
+/* الاسم */
 const student = sessionStorage.getItem("studentName");
 if (!student) {
   window.location.href = "login.html";
 }
 
-/* تحميل الصور تدريجي (سريع) */
+/* تحميل الصور */
 function loadInvestment(withAnswers) {
   document.getElementById("choices").style.display = "none";
 
   const viewer = document.getElementById("viewer");
   const totalPages = 18;
-  let i = 1;
 
-  function loadNext() {
-    if (i > totalPages) return;
-
+  for (let i = 1; i <= totalPages; i++) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     const img = new Image();
+
     const num = String(i).padStart(2, '0');
 
     img.src = withAnswers
-      ? `investment-${num}.png`
-      : `investment-no-${num}.png`;
+      ? `investment-${num}.jpg`
+      : `investment-no-${num}.jpg`;
 
     img.onload = () => {
       canvas.width = img.width;
@@ -104,25 +95,20 @@ function loadInvestment(withAnswers) {
       // رسم الصورة
       ctx.drawImage(img, 0, 0);
 
-      // العلامة المائية
+      // علامة مائية
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate(-25 * Math.PI / 180);
-      ctx.font = "80px Arial";
+      ctx.font = "90px Arial";
       ctx.fillStyle = "rgba(0,0,0,0.2)";
       ctx.textAlign = "center";
-      ctx.fillText("خاص للطالب/ة", 0, 0);
-      ctx.fillText(student, 0, 110);
+      ctx.fillText("خاص بالطالب/ة", 0, 0);
+      ctx.fillText(student, 0, 120);
       ctx.restore();
-
-      viewer.appendChild(canvas);
-
-      i++;
-      setTimeout(loadNext, 80); // تحميل صورة صورة (سريع)
     };
-  }
 
-  loadNext();
+    viewer.appendChild(canvas);
+  }
 }
 </script>
 

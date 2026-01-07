@@ -74,4 +74,50 @@ document.addEventListener("keydown", e => {
 /* الاسم */
 const student = sessionStorage.getItem("studentName");
 if (!student) {
-  window.location
+  window.location.href = "login.html";
+}
+
+/* تحميل صور الاستثمار */
+function loadInvestment(withAnswers) {
+  document.getElementById("choices").style.display = "none";
+
+  const viewer = document.getElementById("viewer");
+  const totalPages = 18;
+
+  for (let i = 1; i <= totalPages; i++) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const img = new Image();
+    const num = String(i).padStart(2, '0');
+
+    img.src = withAnswers
+      ? `investment-${num}.png`
+      : `investment-no-${num}.png`;
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      /* رسم الصورة */
+      ctx.drawImage(img, 0, 0);
+
+      /* العلامة المائية */
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(-25 * Math.PI / 180);
+      ctx.font = "100px Arial";
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.textAlign = "center";
+      ctx.fillText("خاص للطالب/ة", 0, 0);
+      ctx.fillText(student, 0, 120);
+      ctx.restore();
+    };
+
+    viewer.appendChild(canvas);
+  }
+}
+</script>
+
+</body>
+</html>

@@ -2,46 +2,115 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta charset="UTF-8">
-<title>المادة غير جاهزة</title>
+<title>ريادة الأعمال</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
   background: #f5f5f5;
   font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   text-align: center;
-  color: #333;
 }
 
-.message-box {
-  background: white;
+/* اختيار */
+.choices {
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.message-box h1 {
-  font-size: 28px;
-  margin-bottom: 15px;
-}
-
-.message-box p {
+.choices button {
+  padding: 15px 25px;
   font-size: 18px;
-  color: #555;
+  margin: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #2a5298;
+  color: white;
+}
+
+.choices button:hover {
+  background: #1e3c72;
+}
+
+/* viewer */
+.viewer {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* canvas */
+canvas {
+  width: 100%;
+  margin-bottom: 20px;
+  user-select: none;
 }
 </style>
 </head>
 <body>
 
-<div class="message-box">
-  <h1>⏳ انتظر الأسئلة</h1>
-  <p>هذه المادة لم تُرفع بعد. برجاء العودة لاحقًا.</p>
+<!-- اختيار -->
+<div id="choices" class="choices">
+  <h2>اختر نوع الأسئلة</h2>
+  <button onclick="loadEntrepreneurship(false)">📘 بدون إجابات</button>
+  <button onclick="loadEntrepreneurship(true)">✅ بالإجابات</button>
 </div>
+
+<!-- الصور -->
+<div id="viewer" class="viewer"></div>
+
+<script>
+/* حماية بسيطة */
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+/* الاسم */
+const student = sessionStorage.getItem("studentName");
+if (!student) {
+  window.location.href = "login.html";
+}
+
+/* تحميل الصور */
+function loadEntrepreneurship(withAnswers) {
+  document.getElementById("choices").style.display = "none";
+
+  const viewer = document.getElementById("viewer");
+  const totalPages = 20; // عدد صفحات ريادة الأعمال
+
+  for (let i = 1; i <= totalPages; i++) {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+
+    const num = String(i).padStart(2, '0');
+
+    img.src = withAnswers
+      ? `entrepreneurship-${num}.jpg`
+      : `entrepreneurship-no-${num}.jpg`;
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // رسم الصورة
+      ctx.drawImage(img, 0, 0);
+
+      // علامة مائية
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(-25 * Math.PI / 180);
+      ctx.font = "90px Arial";
+      ctx.fillStyle = "rgba(0,0,0,0.2)";
+      ctx.textAlign = "center";
+      ctx.fillText("خاص للطالب/ة", 0, 0);
+      ctx.fillText(student, 0, 120);
+      ctx.restore();
+    };
+
+    viewer.appendChild(canvas);
+  }
+}
+</script>
 
 </body>
 </html>

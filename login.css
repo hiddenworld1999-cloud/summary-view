@@ -1,75 +1,79 @@
-{
-box-sizing: border-box;
-font-family: Arial, sans-serif;
+/* إعدادات عامة */
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
-
 
 body {
-margin: 0;
-height: 100vh;
-background: linear-gradient(135deg, #1e3c72, #2a5298);
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('background.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 
-.login-container {
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
+/* صندوق تسجيل الدخول */
 .login-card {
-background: white;
-width: 90%;
-max-width: 350px;
-padding: 30px;
-border-radius: 16px;
-text-align: center;
-box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  background: rgba(255, 255, 255, 0.8); /* شفافية جزئية */
+  backdrop-filter: blur(10px); /* blur للخلفية */
+  border-radius: 16px;
+  width: 90%;
+  max-width: 350px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  
+  /* Animation */
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-card h1 {
-margin-bottom: 10px;
-color: #2a5298;
-}
-
-.login-card p {
-font-size: 14px;
-color: #666;
-margin-bottom: 20px;
+  color: #2a5298;
+  margin-bottom: 10px;
 }
 
 .login-card input {
-width: 100%;
-padding: 12px;
-font-size: 16px;
-border-radius: 8px;
-border: 1px solid #ccc;
-margin-bottom: 15px;
-outline: none;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
 }
 
 .login-card input:focus {
-border-color: #2a5298;
+  border-color: #2a5298;
 }
 
 .login-card button {
-width: 100%;
-padding: 12px;
-font-size: 16px;
-background: #2a5298;
-color: white;
-border: none;
-border-radius: 8px;
-cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background: #2a5298;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .login-card button:hover {
-background: #1e3c72;
+  background: #1e3c72;
 }
 
 .note {
-display: block;
-margin-top: 15px;
-font-size: 12px;
-color: #999;
+  font-size: 12px;
+  color: #999;
+  margin-top: 10px;
 }

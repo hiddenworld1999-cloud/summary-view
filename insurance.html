@@ -18,7 +18,8 @@ body {
   padding: 30px;
 }
 
-.choices button {
+.choices button,
+#backBtn {
   padding: 15px 25px;
   font-size: 18px;
   margin: 10px;
@@ -29,7 +30,8 @@ body {
   color: white;
 }
 
-.choices button:hover {
+.choices button:hover,
+#backBtn:hover {
   background: #1e3c72;
 }
 
@@ -58,25 +60,31 @@ canvas {
   <button onclick="loadInsurance('calc')">🧮 طريقة الحل بالآلة</button>
 </div>
 
+<!-- زر رجوع -->
+<button id="backBtn" onclick="goBack()" style="display:none;">⬅ رجوع</button>
+
 <!-- الصور -->
 <div id="viewer" class="viewer"></div>
 
 <script>
-/* منع كليك يمين */
+/* حماية بسيطة */
 document.addEventListener("contextmenu", e => e.preventDefault());
 
-/* التحقق من تسجيل الدخول */
+/* الاسم */
 const student = sessionStorage.getItem("studentName");
 if (!student) {
   window.location.href = "login.html";
 }
 
-/* تحميل صور التأمين */
+/* تحميل الصور */
 function loadInsurance(type) {
   document.getElementById("choices").style.display = "none";
+  document.getElementById("backBtn").style.display = "inline-block";
 
   const viewer = document.getElementById("viewer");
-  const totalPages = 23; // عدل العدد لو الصفحات أكتر
+  viewer.innerHTML = "";
+
+  const totalPages = 23; // عدل العدد لو زودت صفحات
 
   for (let i = 1; i <= totalPages; i++) {
     const canvas = document.createElement("canvas");
@@ -85,12 +93,12 @@ function loadInsurance(type) {
 
     const num = String(i).padStart(2, '0');
 
-    if (type === 'yes') {
+    if (type === "yes") {
       img.src = `insurance-${num}.jpg`;
-    } else if (type === 'calc') {
-      img.src = `insurance-calc-${num}.jpg`;
-    } else {
+    } else if (type === "no") {
       img.src = `insurance-no-${num}.jpg`;
+    } else {
+      img.src = `insurance-calc-${num}.jpg`;
     }
 
     img.onload = () => {
@@ -113,6 +121,13 @@ function loadInsurance(type) {
 
     viewer.appendChild(canvas);
   }
+}
+
+/* رجوع */
+function goBack() {
+  document.getElementById("choices").style.display = "block";
+  document.getElementById("viewer").innerHTML = "";
+  document.getElementById("backBtn").style.display = "none";
 }
 </script>
 
